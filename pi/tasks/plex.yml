@@ -1,0 +1,4 @@
+- hosts: pi
+  tasks:
+      - name: Install plex media server via docker
+

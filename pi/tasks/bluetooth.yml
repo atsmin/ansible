@@ -1,0 +1,31 @@
+- hosts: pi
+  tasks:
+      - name: Update cache
+        apt:
+            update_cache: yes
+            cache_valid_time: 3600
+
+      - name: Install packages for bluetooth
+        apt:
+            pkg: "{{item}}"
+            state: installed
+        with_items:
+            - pi-bluetooth
+            - bluez
+            - bluez-firmware
+            - libbluetooth-dev
+
+      - name: Install packages for pygattlib
+        apt:
+            pkg: "{{item}}"
+            state: installed
+        with_items:
+            - libboost-python-dev
+            - libboost-thread-dev
+            - libglib2.0-dev
+            - libgtk2.0-dev
+            - libperl-dev
+
+      - name: Install python virtualenv
+        pip:
+            name: virtualenv
