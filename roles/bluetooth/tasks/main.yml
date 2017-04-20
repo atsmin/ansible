@@ -24,6 +24,8 @@
       - libgtk2.0-dev
       - libperl-dev
 
-- name: Install python virtualenv
-  pip:
-      name: virtualenv
+- name: Ensure bluetooth service started
+  service:
+      name: bluetooth
+      state: started
+      enabled: yes
