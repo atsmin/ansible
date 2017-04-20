@@ -1,0 +1,11 @@
+- name: Install apt packages
+  apt:
+      pkg: "{{item}}"
+      state: installed
+  with_items:
+      - python-dev
+
+- name: Install python packages
+  pip:
+      name: docker-py
+

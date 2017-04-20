@@ -1,0 +1,7 @@
+ - name: Install plex media server via docker
+   docker:
+       name: plex
+       image: besn0847/arm-plex
+       state: started
+       expose: 32400
+       net: host
