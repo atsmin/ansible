@@ -4,6 +4,7 @@
       state: installed
   with_items:
       - python-dev
+      - ntfs-3g  # for mounting windows filesystem
 
 - name: Install python packages
   pip:
