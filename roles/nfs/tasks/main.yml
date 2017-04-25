@@ -26,3 +26,6 @@
       name: rpcbind
       state: started
       enabled: yes
+
+- name: Run exportfs command
+  command: exportfs -r
