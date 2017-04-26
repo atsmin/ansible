@@ -23,5 +23,5 @@
 - name: Ensure bluetooth service started
   service:
       name: bluetooth
-      state: started
+      state: restarted
       enabled: yes

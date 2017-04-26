@@ -18,13 +18,13 @@
 - name: Ensure nfs-kernel-server service running
   service:
       name: nfs-kernel-server
-      state: started
+      state: restarted
       enabled: yes
 
 - name: Ensure rpcbind service running
   service:
       name: rpcbind
-      state: started
+      state: restarted
       enabled: yes
 
 - name: Run exportfs command
