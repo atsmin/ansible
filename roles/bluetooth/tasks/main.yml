@@ -8,6 +8,8 @@
       - bluez-firmware
       - blueman
       - libbluetooth-dev
+  notify:
+      - restart bluetooth
 
 - name: Install packages for pygattlib
   apt:
@@ -20,8 +22,8 @@
       - libgtk2.0-dev
       - libperl-dev
 
-- name: Ensure bluetooth service started
+- name: Ensure bluetooth service is running
   service:
       name: bluetooth
-      state: restarted
+      state: started
       enabled: yes

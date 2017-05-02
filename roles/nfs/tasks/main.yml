@@ -14,18 +14,19 @@
     owner: root
     group: root
     mode: 0644
+  notify:
+       - reload exports
+       - restart nfs-kernel-server
+       - restart rpcbind
 
-- name: Ensure nfs-kernel-server service running
+- name: Ensure nfs-kernel-server service is running
   service:
       name: nfs-kernel-server
-      state: restarted
+      state: started
       enabled: yes
 
-- name: Ensure rpcbind service running
+- name: Ensure rpcbind service is running
   service:
       name: rpcbind
-      state: restarted
+      state: started
       enabled: yes
-
-- name: Run exportfs command
-  command: exportfs -r
