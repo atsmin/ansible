@@ -5,4 +5,4 @@
       - plex
       - nfs
       - nginx
-    # - wlan
+      - wlan

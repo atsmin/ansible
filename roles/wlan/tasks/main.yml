@@ -1,5 +1,5 @@
 - name: copy wlan0 interface conf file
-- copy:
+  copy:
     src: ./roles/wlan/files/interfaces
     dest: /etc/network/interfaces
     owner: root
@@ -7,7 +7,7 @@
     mode: 0644
 
 - name: copy wpa_supplicant.conf
-- template:
+  template:
     src: ./roles/wlan/templates/wpa_supplicant.conf.j2
     dest: /etc/wpa_supplicant/wpa_supplicant.conf
     owner: root

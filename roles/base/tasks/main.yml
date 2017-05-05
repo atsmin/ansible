@@ -13,6 +13,8 @@
       state: installed
   with_items:
       - python-dev
+      - python3-pip
+      - python-pip
       # for mounting windows filesystem
       - ntfs-3g
       # for allowing apt to use a repository over HTTPS
