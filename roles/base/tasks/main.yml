@@ -29,6 +29,6 @@
       name: docker-py
 
 - name: Set /etc/motd
-  file:
+  copy:
       src: ./roles/base/files/motd
       dest: /etc/motd
