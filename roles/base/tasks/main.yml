@@ -12,6 +12,7 @@
       pkg: "{{item}}"
       state: installed
   with_items:
+      - vim
       - python-dev
       - python3-pip
       - python-pip
