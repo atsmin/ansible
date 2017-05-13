@@ -16,6 +16,10 @@
       - python-dev
       - python3-pip
       - python-pip
+      - rubygems
+      - libpq-dev
+      - libreadline-dev
+      - nodejs
       # for mounting windows filesystem
       - ntfs-3g
       # for allowing apt to use a repository over HTTPS
@@ -25,9 +29,28 @@
       - gnupg2
       - software-properties-common
 
+- stat:
+    path: /var/lib/docker
+  register: path
+
+- name: Install docker if not installed yet
+  shell: curl -sSL https://get.docker.com | sh
+  when: path.stat.isdir is not defined
+
+- name: upgrade pip
+  shell: pip install pip --upgrade
+
 - name: Install python packages
   pip:
       name: docker-py
+
+- name: Set static ip address
+  copy:
+      src: ./roles/base/files/dhcpcd.conf
+      dest: /etc/dhcpcd.conf
+      owner: root
+      group: netdev
+      mode: 664
 
 - name: Set /etc/motd
   copy:
