@@ -56,3 +56,22 @@
   copy:
       src: ./roles/base/files/motd
       dest: /etc/motd
+
+- name: Install ntp
+  apt:
+      pkg: ntp
+      state: installed
+  notify:
+       - restart ntp
+
+- name: Ensure ntp nict setting
+  lineinfile:
+      dest: /etc/ntp.conf
+      regexp: 'ntp.nict.jp'
+      line: 'pool ntp.nict.jp iburst'
+
+- name: Ensure ntp service is running
+  service:
+      name: ntp
+      state: started
+      enabled: yes
