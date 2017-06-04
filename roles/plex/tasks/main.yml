@@ -1,7 +1,15 @@
- - name: Install plex media server via docker
-   docker:
-       name: plex
-       image: besn0847/arm-plex
-       state: started
-       expose: 32400
-       net: host
+- name: Creates library directory
+  file:
+      path: /mnt/data/library
+      state: directory
+
+- name: Install plex media server via docker
+  docker:
+      name: plex
+      image: besn0847/arm-plex
+      state: started
+      expose: 32400
+      net: host
+      volumes: /mnt/data/library:/data
+  notify:
+      - restart plex
