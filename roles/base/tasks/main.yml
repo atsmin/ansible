@@ -28,6 +28,9 @@
       - curl
       - gnupg2
       - software-properties-common
+      # for datadog monitoring
+      - sysstat
+      - libcurl4-openssl-dev
 
 - stat:
     path: /var/lib/docker
