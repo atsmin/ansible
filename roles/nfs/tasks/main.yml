@@ -15,9 +15,9 @@
     group: root
     mode: 0644
   notify:
-       - reload exports
-       - restart nfs-kernel-server
        - restart rpcbind
+       - restart nfs-kernel-server
+       - reload exports
 
 - name: Ensure nfs-kernel-server service is running
   service:
