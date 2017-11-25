@@ -31,6 +31,7 @@
       # for datadog monitoring
       - sysstat
       - libcurl4-openssl-dev
+      - fail2ban
 
 - stat:
     path: /var/lib/docker
