@@ -1,0 +1,35 @@
+- hosts: pi
+  become: true
+  remote_user: pi
+  tasks:
+  - name: Update cache
+    apt:
+      update_cache: yes
+
+  - name: Update all packages to the latest version
+    apt:
+      upgrade: dist
+
+- hosts: sakura
+  become: true
+  remote_user: root
+  tasks:
+  - name: Update cache
+    yum:
+      name: '*'
+      update_cache: yes
+
+  - name: upgrade all packages
+    yum:
+      name: '*'
+      state: latest
+
+- hosts: local
+  connection: local
+  become: true
+  remote_user: atsmin
+  tasks:
+  - name: Update cache and upgrade all packages
+    pacman:
+      update_cache: yes
+      upgrade: yes
