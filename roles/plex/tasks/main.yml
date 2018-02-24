@@ -17,6 +17,7 @@
       image: besn0847/arm-plex
       state: started
       restart: yes
+      network_mode: host
       exposed_ports:
           - 32400
       volumes:

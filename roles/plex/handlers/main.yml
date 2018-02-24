@@ -1,6 +1,0 @@
-- name: restart plex
-  docker:
-      name: plex
-      image: besn0847/arm-plex
-      state: restarted
-
