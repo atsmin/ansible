@@ -3,13 +3,23 @@
       path: /mnt/data/library
       state: directory
 
-- name: Install plex media server via docker
-  docker:
+- name: Plex media server container present
+  docker_container:
+      name: plex
+      image: besn0847/arm-plex
+      state: present
+  tags:
+      - plex
+
+- name: Restart container
+  docker_container:
       name: plex
       image: besn0847/arm-plex
       state: started
-      expose: 32400
-      net: host
-      volumes: /mnt/data/library:/data
-  notify:
-      - restart plex
+      restart: yes
+      exposed_ports:
+          - 32400
+      volumes:
+          - "/mnt/data/library:/data"
+  tags:
+      - plex

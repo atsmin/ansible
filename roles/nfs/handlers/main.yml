@@ -3,6 +3,11 @@
       name: rpcbind
       state: restarted
 
+- name: restart nfs-common
+  service:
+      name: nfs-common
+      state: restarted
+
 - name: restart nfs-kernel-server
   service:
       name: nfs-kernel-server
