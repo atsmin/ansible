@@ -6,8 +6,6 @@
       - nfs-kernel-server
       - nfs-common
       - portmap
-  tags:
-      - nfs
 
 - name: /etc/exportfs
   copy:
@@ -21,44 +19,32 @@
        - restart nfs-common
        - restart nfs-kernel-server
        - reload exports
-  tags:
-      - nfs
 
 - name: Ensure rpcbind service is running
   service:
       name: rpcbind
       state: restarted
       enabled: yes
-  tags:
-      - nfs
 
 - name: Ensure nfs-common service is running
   service:
       name: nfs-common
       state: restarted
       enabled: yes
-  tags:
-      - nfs
 
 - name: Ensure nfs-kernel-server service is running
   service:
       name: nfs-kernel-server
       state: restarted
       enabled: yes
-  tags:
-      - nfs
 
 - name: Creates mount point directory
   file:
       path: /mnt/data
       state: directory
-  tags:
-      - nfs
 
 - name: Ensure fstab mount setting
   lineinfile:
       dest: /etc/fstab
       regexp: '^/dev/sda1'
       line: '/dev/sda1   /mnt/data   ext4   defaults,auto   0   3'
-  tags:
-      - nfs

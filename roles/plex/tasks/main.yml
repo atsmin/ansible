@@ -8,8 +8,6 @@
       name: plex
       image: besn0847/arm-plex
       state: present
-  tags:
-      - plex
 
 - name: Restart container
   docker_container:
@@ -21,5 +19,3 @@
           - 32400
       volumes:
           - "/mnt/data/library:/data"
-  tags:
-      - plex
