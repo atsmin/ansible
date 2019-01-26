@@ -1,8 +1,8 @@
 [pi]
-192.168.1.7
+192.168.2.2
 
 [sakura]
 160.16.228.65
 
 [local]
-127.0.0.1
+localhost    ansible_connection=local    ansible_user=atsmin

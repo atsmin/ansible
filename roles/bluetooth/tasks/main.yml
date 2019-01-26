@@ -1,26 +1,26 @@
 - name: Install packages for bluetooth
   apt:
-      pkg: "{{item}}"
-      state: installed
-  with_items:
-      - pi-bluetooth
-      - bluez
-      - bluez-firmware
-      - blueman
-      - libbluetooth-dev
+      pkg: [
+          'pi-bluetooth',
+          'bluez',
+          'bluez-firmware',
+          'blueman',
+          'libbluetooth-dev'
+      ]
+      state: present
   notify:
       - restart bluetooth
 
 - name: Install packages for pygattlib
   apt:
-      pkg: "{{item}}"
-      state: installed
-  with_items:
-      - libboost-python-dev
-      - libboost-thread-dev
-      - libglib2.0-dev
-      - libgtk2.0-dev
-      - libperl-dev
+      pkg: [
+          'libboost-python-de',
+          'libboost-thread-de',
+          'libglib2.0-de',
+          'libgtk2.0-de',
+          'libperl-de'
+      ]
+      state: present
 
 - name: Ensure bluetooth service is running
   service:

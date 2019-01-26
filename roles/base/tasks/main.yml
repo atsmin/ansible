@@ -5,36 +5,37 @@
 
 - name: Update all packages to the latest version
   apt:
-    upgrade: dist
+      upgrade: dist
 
 - name: Install apt packages
   apt:
-      pkg: "{{item}}"
-      state: installed
-  with_items:
-      - vim
-      - python-dev
-      - python3-pip
-      - python-pip
-      - rubygems
-      - libpq-dev
-      - libreadline-dev
-      - nodejs
-      # for mounting windows filesystem
-      - ntfs-3g
-      # for allowing apt to use a repository over HTTPS
-      - apt-transport-https
-      - ca-certificates
-      - curl
-      - gnupg2
-      - software-properties-common
-      # for datadog monitoring
-      - sysstat
-      - libcurl4-openssl-dev
-      - fail2ban
+      pkg: [
+          'vim',
+          'python-dev',
+          'python3-pip',
+          'python-pip',
+          # 'rubygems',
+          'libpq-dev',
+          'libreadline-dev',
+          'nodejs',
+          # for mounting windows filesystem
+          'ntfs-3g',
+          # for allowing apt to use a repository over HTTPS
+          'apt-transport-https',
+          'ca-certificates',
+          'curl',
+          'gnupg2',
+          'software-properties-common',
+           # for datadog monitoring
+          'sysstat',
+          'libcurl4-openssl-dev',
+          'fail2ban',
+          'lvm2'
+      ]
+      state: present
 
 - stat:
-    path: /var/lib/docker
+      path: /var/lib/docker
   register: path
 
 - name: Install docker if not installed yet
@@ -64,7 +65,7 @@
 - name: Install ntp
   apt:
       pkg: ntp
-      state: installed
+      state: present
   notify:
        - restart ntp
 
