@@ -6,9 +6,10 @@
 - name: Ensure conf-dir setting uncomment
   lineinfile:
       dest: /etc/dnsmasq.conf
-      insertafter: '#conf-dir=/etc/dnsmasq.d'
-      firstmatch: yes
+      regexp: '^#conf-dir=/etc/dnsmasq.d$'
       line: 'conf-dir=/etc/dnsmasq.d'
+      firstmatch: yes
+      state: present
   notify:
        - restart dnsmasq
 

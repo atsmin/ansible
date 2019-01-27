@@ -1,0 +1,21 @@
+- name: Install tinyproxy packages
+  apt:
+      pkg: 'tinyproxy'
+      state: present
+
+- name: Ensure Allow access setting
+  lineinfile:
+      dest: /etc/tinyproxy/tinyproxy.conf
+      regexp: '^#Allow 192.168.0.0/16$'
+      line: 'Allow 192.168.0.0/16'
+      firstmatch: yes
+      state: present
+  notify:
+       - restart tinyproxy
+
+- name: Ensure tinyproxy service is running
+  service:
+      name: tinyproxy
+      state: started
+      enabled: yes
+
