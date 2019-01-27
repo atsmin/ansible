@@ -14,11 +14,11 @@
 - name: Install packages for pygattlib
   apt:
       pkg: [
-          'libboost-python-de',
-          'libboost-thread-de',
-          'libglib2.0-de',
-          'libgtk2.0-de',
-          'libperl-de'
+          'libboost-python-dev',
+          'libboost-thread-dev',
+          'libglib2.0-dev',
+          'libgtk2.0-dev',
+          'libperl-dev'
       ]
       state: present
 

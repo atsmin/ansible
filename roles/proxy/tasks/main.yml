@@ -10,6 +10,7 @@
       line: 'Allow 192.168.0.0/16'
       firstmatch: yes
       state: present
+      backrefs: yes
   notify:
        - restart tinyproxy
 

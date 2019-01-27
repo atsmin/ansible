@@ -10,6 +10,7 @@
       line: 'conf-dir=/etc/dnsmasq.d'
       firstmatch: yes
       state: present
+      backrefs: yes
   notify:
        - restart dnsmasq
 
