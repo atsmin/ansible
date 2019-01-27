@@ -1,0 +1,24 @@
+- name: Install dnsmasq package
+  apt:
+      pkg: 'dnsmasq'
+      state: present
+
+- name: Ensure conf-dir setting uncomment
+  lineinfile:
+      dest: /etc/dnsmasq.conf
+      insertafter: '#conf-dir=/etc/dnsmasq.d'
+      firstmatch: yes
+      line: 'conf-dir=/etc/dnsmasq.d'
+  notify:
+       - restart dnsmasq
+
+- name: Set /etc/dnsmasq.d/atsmin.conf
+  copy:
+      src: ./roles/dhcp/files/atsmin.conf
+      dest: /etc/dnsmasq.d/atsmin.conf
+
+- name: Ensure dnsmasq service is running
+  service:
+      name: dnsmasq
+      state: started
+      enabled: yes
