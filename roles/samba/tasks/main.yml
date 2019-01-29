@@ -1,0 +1,46 @@
+- name: Install packages for Samba
+  apt:
+      pkg: ['samba', 'samba-common-bin']
+      state: present
+
+- name: Create directory to share
+  file:
+      path: /data/share
+      state: directory
+      mode: 0777
+      owner: pi
+      group: pi
+
+- name: Create user for samba
+  user:
+      name: chiro
+      create_home: False
+      password_lock: yes
+
+# - name: Create samaba user
+# - shell: smbpasswd -a chiro
+
+- name: Insert shared folder setting
+  blockinfile:
+      path: /etc/samba/smb.conf
+      block: |
+          [Share]
+            comment = Shared folder
+            path = /data/share
+            read only = no
+  notify:
+       - restart smbd
+       - restart nmbd
+
+- name: Ensure smbd service is running
+  service:
+      name: smbd
+      state: started
+      enabled: yes
+
+- name: Ensure nmbd service is running
+  service:
+      name: nmbd
+      state: started
+      enabled: yes
+

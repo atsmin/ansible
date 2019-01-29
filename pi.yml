@@ -1,9 +1,12 @@
 - hosts: pi
   become: true
   roles:
-      - base
-      - bluetooth
+      #- base
+      #- bluetooth
       #- plex
       #- nfs
       # - nginx
       # - wlan
+      # - dhcp
+      # - proxy
+      - samba
