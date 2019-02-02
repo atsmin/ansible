@@ -9,12 +9,15 @@ source-directory /etc/network/interfaces.d
 auto lo
 iface lo inet loopback
 
-iface eth0 inet manual
+auto eth0
+iface eth0 inet static
+    address 192.168.1.2
+    gateway 192.168.1.1
+    netmask 24
 
-allow-hotplug wlan0
-iface wlan0 inet static
-address 192.168.2.2
-gateway 192.168.2.1
-netmask 24
-wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
+# allow-hotplug wlan0
+# iface wlan0 inet static
+#     address 192.168.1.4
+#     netmask 24
+#     wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
 

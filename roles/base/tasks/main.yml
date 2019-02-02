@@ -1,12 +1,3 @@
-- name: Update cache
-  apt:
-      update_cache: yes
-      cache_valid_time: 3600
-
-- name: Update all packages to the latest version
-  apt:
-      upgrade: dist
-
 - name: Install apt packages
   apt:
       pkg: [

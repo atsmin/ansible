@@ -1,7 +1,17 @@
 - hosts: pi
   become: true
+  pre_tasks:
+  - name: Update cache
+    apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+  - name: Update all packages to the latest version
+    apt:
+        upgrade: dist
+
   roles:
-      #- base
+      - base
       #- bluetooth
       #- plex
       #- nfs
