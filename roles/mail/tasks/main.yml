@@ -1,0 +1,69 @@
+- name: Install postfix package
+  apt:
+      pkg: ['postfix', 'mailutils', 'dovecot-core', 'dovecot-imapd']
+      state: present
+
+- name: Create aliases file
+  copy:
+      src: ./roles/mail/files/aliases
+      dest: /etc/aliases
+      backup: yes
+  notify:
+       - exec newaliases
+
+- name: Create postfix master.cf
+  copy:
+      src: ./roles/mail/files/main.cf
+      dest: /etc/postfix/main.cf
+      backup: yes
+  notify:
+       - restart postfix
+
+- name: Create dovecot.conf
+  copy:
+      src: ./roles/mail/files/dovecot.conf
+      dest: /etc/dovecot/dovecot.conf
+      backup: yes
+  notify:
+       - restart dovecot
+
+- name: Check Maildir in /etc/skel already exists.
+  stat:
+      path: /etc/skel/Maildir
+  register: skelmaildir
+
+- name: Create Maildir in /etc/skel
+  shell: |
+    sudo maildirmake.dovecot /etc/skel/Maildir
+    sudo maildirmake.dovecot /etc/skel/Maildir/.Drafts
+    sudo maildirmake.dovecot /etc/skel/Maildir/.Sent
+    sudo maildirmake.dovecot /etc/skel/Maildir/.Spam
+    sudo maildirmake.dovecot /etc/skel/Maildir/.Trash
+    sudo maildirmake.dovecot /etc/skel/Maildir/.Templates
+  when: skelmaildir.stat.isdir is not defined
+
+- name: Check Maildir for pi already exists.
+  stat:
+      path: /home/pi/Maildir
+  register: pimaildir
+
+- name: Create Maildir for pi
+  copy:
+      src: /etc/skel/Maildir
+      dest: /home/pi
+      owner: pi
+      group: pi
+      mode: 0700
+  when: pimaildir.stat.isdir is not defined
+
+- name: Ensure postfix service is running
+  service:
+      name: postfix
+      state: started
+      enabled: yes
+
+- name: Ensure dovecot service is running
+  service:
+      name: dovecot
+      state: started
+      enabled: yes

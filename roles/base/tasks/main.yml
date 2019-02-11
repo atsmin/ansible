@@ -21,11 +21,13 @@
           'sysstat',
           'libcurl4-openssl-dev',
           'fail2ban',
-          'lvm2'
+          'lvm2',
+          'snmpd'
       ]
       state: present
 
-- stat:
+- name: Check docker is already installed
+  stat:
       path: /var/lib/docker
   register: path
 

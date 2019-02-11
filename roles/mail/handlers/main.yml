@@ -1,0 +1,12 @@
+- name: exec newaliases
+  shell: newaliases
+
+- name: restart postfix
+  service:
+      name: postfix
+      state: restarted
+
+- name: restart dovecot
+  service:
+      name: dovecot
+      state: restarted

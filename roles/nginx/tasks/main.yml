@@ -1,7 +1,7 @@
 - name: Install apt packages
   apt:
       pkg: nginx
-      state: installed
+      state: present
 
 - name: Ensure nginx service is running
   service:
