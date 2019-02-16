@@ -73,3 +73,9 @@
       name: ntp
       state: started
       enabled: yes
+
+- name: Ensure snmpd service is running
+  service:
+      name: snmpd
+      state: started
+      enabled: yes
