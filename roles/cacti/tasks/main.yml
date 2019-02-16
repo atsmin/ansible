@@ -1,0 +1,9 @@
+- name: Install cacti packages
+  apt:
+      pkg: ['cacti']
+
+- name: Ensure apache service is running
+  service:
+      name: apache2
+      state: started
+      enabled: yes
