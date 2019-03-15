@@ -38,6 +38,9 @@
 - name: upgrade pip
   shell: pip install pip --upgrade
 
+- name: disable swap
+  shell: dphys-swapfile swapoff
+
 - name: Install python packages
   pip:
       name: docker-py
