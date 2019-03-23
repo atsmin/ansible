@@ -71,6 +71,12 @@
       regexp: 'ntp.nict.jp'
       line: 'pool ntp.nict.jp iburst'
 
+- name: Ensure sysstat enabled
+  lineinfile:
+    path: /etc/default/sysstat
+    regexp: '^ENABLED='
+    line: 'ENABLED="true"'
+
 - name: Ensure ntp service is running
   service:
       name: ntp
@@ -80,5 +86,11 @@
 - name: Ensure snmpd service is running
   service:
       name: snmpd
+      state: started
+      enabled: yes
+
+- name: Ensure sysstat service is running
+  service:
+      name: sysstat
       state: started
       enabled: yes
