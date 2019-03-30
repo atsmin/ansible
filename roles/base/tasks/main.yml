@@ -2,6 +2,7 @@
   apt:
       pkg: [
           'vim',
+          'tmux',
           'python-dev',
           'python3-pip',
           'python-pip',
