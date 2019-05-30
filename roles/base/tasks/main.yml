@@ -40,7 +40,7 @@
   shell: pip install pip --upgrade
 
 - name: disable swap
-  shell: dphys-swapfile swapoff
+  shell: dphys-swapfile swapoff && update-rc.d dphys-swapfile remove
 
 - name: Install python packages
   pip:
