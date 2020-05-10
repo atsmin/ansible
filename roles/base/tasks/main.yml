@@ -23,7 +23,8 @@
           'libcurl4-openssl-dev',
           'fail2ban',
           'lvm2',
-          'snmpd'
+          'snmpd',
+          'watchdog'
       ]
       state: present
 
@@ -41,6 +42,14 @@
 
 - name: disable swap
   shell: dphys-swapfile swapoff && update-rc.d dphys-swapfile remove
+
+- name: load kernel module for watchdog
+  shell: modprobe bcm2835_wdt
+  become: true
+
+- name: add line to /etc/modules
+  shell: echo "bcm2835_wdt" >> /etc/modules
+  become: true
 
 - name: Install python packages
   pip:
@@ -93,5 +102,11 @@
 - name: Ensure sysstat service is running
   service:
       name: sysstat
+      state: started
+      enabled: yes
+
+- name: Ensure watchdog service is running
+  service:
+      name: watchdog
       state: started
       enabled: yes

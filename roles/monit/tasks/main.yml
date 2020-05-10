@@ -1,0 +1,56 @@
+- name: Install Monit package
+  apt:
+      pkg: 'monit'
+      state: present
+
+- name: Ensure Web Interface setting uncomment
+  lineinfile:
+      dest: /etc/monit/monitrc
+      regexp: '^# set httpd port 2812'
+      line: 'set httpd port 2812'
+      firstmatch: yes
+      state: present
+      backrefs: yes
+  notify:
+       - restart monit
+
+- name: Ensure Web Interface setting uncomment
+  lineinfile:
+      dest: /etc/monit/monitrc
+      regexp: '^#     allow admin:monit'
+      line: 'allow admin:monit'
+      firstmatch: yes
+      state: present
+      backrefs: yes
+  notify:
+       - restart monit
+
+- name: Enable SSH monitoring
+  file:
+      src: /etc/monit/conf-available/openssh-server
+      dest: /etc/monit/conf-enabled/openssh-server
+      state: link
+  notify:
+       - restart monit
+
+- name: Enable Nginx monitoring
+  file:
+      src: /etc/monit/conf-available/nginx
+      dest: /etc/monit/conf-enabled/nginx
+      state: link
+  notify:
+       - restart monit
+
+- name: Enable Postfix monitoring
+  file:
+      src: /etc/monit/conf-available/postfix
+      dest: /etc/monit/conf-enabled/postfix
+      state: link
+  notify:
+       - restart monit
+
+- name: Ensure monit service is running
+  service:
+      name: monit
+      state: started
+      enabled: yes

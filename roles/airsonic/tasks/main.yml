@@ -1,0 +1,69 @@
+- name: Install apt packages
+  apt:
+      pkg: ['oracle-java8-jdk','tomcat8']
+      state: present
+
+- name: Create airsonic directory
+  file:
+      path: /var/airsonic
+      state: directory
+      mode: 0775
+      owner: tomcat8
+      group: tomcat8
+
+- name: Ensure tomcat service == stopped
+  service:
+      name: tomcat8
+      state: stopped
+      enabled: yes
+  when: install == "true"
+
+- name: Ensure airsonic.war file doesn't already exist
+  file:
+      path: /var/lib/tomcat8/webapps/airsonic.war
+      state: absent
+  when: install == "true"
+
+- name: Ensure tomcat airsonic directory doesn't already exist
+  file:
+      path: /var/lib/tomcat8/webapps/airsonic
+      state: absent
+  when: install == "true"
+
+- name: Ensure tomcat work directory doesn't already exist
+  file:
+      path: /var/lib/tomcat8/work/*
+      state: absent
+  when: install == "true"
+
+- name: Download airsonic.war
+  vars:
+      version: v10.1.2
+  shell:  wget -O "/var/lib/tomcat8/webapps/airsonic.war" "https://github.com/airsonic/airsonic/releases/download/{{ version }}/airsonic.war"
+  when: install == "true"
+
+- name: Ensure tomcat service == started
+  service:
+      name: tomcat8
+      state: started
+      enabled: yes
+
+- name: Add nginx reverse proxy setting
+  blockinfile:
+      path: /etc/nginx/sites-available/default
+      insertbefore: "^}$"
+      block: |
+          location /airsonic/ {
+
+          proxy_pass http://localhost:8080;
+          proxy_set_header X-Forwarded-Host $host;
+          proxy_set_header X-Forwarded-Server $host;
+          proxy_set_header X-Real-IP         $remote_addr;
+          proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto https;
+          proxy_set_header Host              $http_host;
+          proxy_max_temp_file_size           0;
+          proxy_redirect                     http:// https://;
+          }
+  notify:
+      - restart nginx
